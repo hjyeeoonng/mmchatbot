@@ -1,0 +1,58 @@
+{
+  "lookup": {
+    "rules": {
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"inpainting\"}}]": "response_inpainting_example",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"inpainting\"}}, {\"prev_action\": {\"action_name\": \"response_inpainting_example\"}, \"user\": {\"intent\": \"inpainting\"}}]": "action_set_reminder",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"inpainting\"}}, {\"prev_action\": {\"action_name\": \"response_inpainting_example\"}, \"user\": {\"intent\": \"inpainting\"}}, {\"prev_action\": {\"action_name\": \"action_set_reminder\"}, \"user\": {\"intent\": \"inpainting\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"inpainting_done\"}}]": "action_forget_reminders",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"inpainting_done\"}}, {\"prev_action\": {\"action_name\": \"action_forget_reminders\"}, \"user\": {\"intent\": \"inpainting_done\"}}]": "response_inpainting_prompt_example",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"inpainting_done\"}}, {\"prev_action\": {\"action_name\": \"action_forget_reminders\"}, \"user\": {\"intent\": \"inpainting_done\"}}, {\"prev_action\": {\"action_name\": \"response_inpainting_prompt_example\"}, \"user\": {\"intent\": \"inpainting_done\"}}]": "inpainting_form",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"inpainting_done\"}}, {\"prev_action\": {\"action_name\": \"action_forget_reminders\"}, \"user\": {\"intent\": \"inpainting_done\"}}, {\"prev_action\": {\"action_name\": \"response_inpainting_prompt_example\"}, \"user\": {\"intent\": \"inpainting_done\"}}, {\"active_loop\": {\"name\": \"inpainting_form\"}, \"prev_action\": {\"action_name\": \"inpainting_form\"}, \"user\": {\"intent\": \"inpainting_done\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"EXTERNAL_reminder\"}}]": "action_react_to_reminder",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"EXTERNAL_reminder\"}}, {\"prev_action\": {\"action_name\": \"action_react_to_reminder\"}, \"user\": {\"intent\": \"EXTERNAL_reminder\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"nlu_fallback\"}}]": "utter_please_rephrase",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"nlu_fallback\"}}, {\"prev_action\": {\"action_name\": \"utter_please_rephrase\"}, \"user\": {\"intent\": \"nlu_fallback\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"exceptions\"}}]": "utter_default",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"exceptions\"}}, {\"prev_action\": {\"action_name\": \"utter_default\"}, \"user\": {\"intent\": \"exceptions\"}}]": "action_listen",
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"inpainting_form\"}}]": "utter_submit_inpainting",
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"inpainting_form\"}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"utter_submit_inpainting\"}}]": "submit_inpainting_form",
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"inpainting_form\"}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"utter_submit_inpainting\"}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"submit_inpainting_form\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"deny\"}}]": "utter_finish",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"deny\"}}, {\"prev_action\": {\"action_name\": \"utter_finish\"}, \"user\": {\"intent\": \"deny\"}}]": "action_listen"
+    },
+    "rule_only_slots": [],
+    "rule_only_loops": [
+      "inpainting_form"
+    ],
+    "rules_for_loop_unhappy_path": {
+      "[{\"prev_action\": {\"action_name\": \"response_inpainting_prompt_example\"}}, {\"active_loop\": {\"name\": \"inpainting_form\"}, \"prev_action\": {\"action_name\": \"inpainting_form\"}, \"user\": {\"intent\": \"inpainting_done\"}}]": "do_not_predict_loop_action",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}}, {\"active_loop\": {\"name\": \"drawing_form\"}, \"prev_action\": {\"action_name\": \"drawing_form\"}, \"user\": {\"intent\": \"drawing\"}}]": "do_not_predict_loop_action",
+      "[{\"prev_action\": {\"action_name\": \"action_reset_form\"}}, {\"active_loop\": {\"name\": \"drawing_form\"}, \"prev_action\": {\"action_name\": \"drawing_form\"}, \"user\": {\"intent\": \"re_drawing\"}}]": "do_not_predict_loop_action"
+    },
+    "rules_not_in_stories": [
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"nlu_fallback\"}}]",
+      "handling active loops and forms - drawing_form",
+      "handling active loops and forms - inpainting_form - action_listen",
+      "predicting default action with intent back",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"inpainting\"}}, {\"prev_action\": {\"action_name\": \"response_inpainting_example\"}, \"user\": {\"intent\": \"inpainting\"}}, {\"prev_action\": {\"action_name\": \"action_set_reminder\"}, \"user\": {\"intent\": \"inpainting\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"inpainting_done\"}}, {\"prev_action\": {\"action_name\": \"action_forget_reminders\"}, \"user\": {\"intent\": \"inpainting_done\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"nlu_fallback\"}}, {\"prev_action\": {\"action_name\": \"utter_please_rephrase\"}, \"user\": {\"intent\": \"nlu_fallback\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"exceptions\"}}, {\"prev_action\": {\"action_name\": \"utter_default\"}, \"user\": {\"intent\": \"exceptions\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"inpainting\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"exceptions\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"deny\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"EXTERNAL_reminder\"}}, {\"prev_action\": {\"action_name\": \"action_react_to_reminder\"}, \"user\": {\"intent\": \"EXTERNAL_reminder\"}}]",
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"inpainting_form\"}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"utter_submit_inpainting\"}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"submit_inpainting_form\"}}]",
+      "predicting default action with intent restart",
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"inpainting_form\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"inpainting\"}}, {\"prev_action\": {\"action_name\": \"response_inpainting_example\"}, \"user\": {\"intent\": \"inpainting\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"EXTERNAL_reminder\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"deny\"}}, {\"prev_action\": {\"action_name\": \"utter_finish\"}, \"user\": {\"intent\": \"deny\"}}]",
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"inpainting_form\"}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"utter_submit_inpainting\"}}]",
+      "predicting default action with intent session_start",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"inpainting_done\"}}, {\"prev_action\": {\"action_name\": \"action_forget_reminders\"}, \"user\": {\"intent\": \"inpainting_done\"}}, {\"prev_action\": {\"action_name\": \"response_inpainting_prompt_example\"}, \"user\": {\"intent\": \"inpainting_done\"}}]",
+      "handling active loops and forms - inpainting_form",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"inpainting_done\"}}]"
+    ]
+  }
+}

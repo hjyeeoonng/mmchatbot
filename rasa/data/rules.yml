@@ -1,0 +1,82 @@
+version: "3.1"
+
+rules:
+
+# # drawing
+# - rule: Activate Drawing Form
+#   steps:
+#   - intent: drawing
+#   - action: drawing_form
+#   - active_loop: drawing_form
+
+# - rule: Submit Drawing Form
+#   condition:
+#   - active_loop: drawing_form
+#   steps:
+#   - action: drawing_form
+#   - active_loop: null
+#   - slot_was_set:
+#     - requested_slot: null
+#   - action: utter_submit_drawing
+#   - action: submit_drawing_form
+
+# # inpainting
+# - rule: Before Activate Inpainting Form
+#   steps:
+#   - intent: inpainting
+#   - action: response_inpainting_example
+#   - action: action_set_reminder  # (추가) 알림 설정
+  
+# - rule: Activate Inpainting Form
+#   steps:
+#   - intent: inpainting_done
+#   - action: action_forget_reminders # (추가) 알림 취소
+#   - action: response_inpainting_prompt_example
+#   - action: inpainting_form
+#   - active_loop: inpainting_form
+
+# - rule: Submit Inpainting Form
+#   condition:
+#   - active_loop: inpainting_form
+#   steps:
+#   - action: inpainting_form
+#   - active_loop: null
+#   - slot_was_set:
+#     - requested_slot: null
+#   - action: utter_submit_inpainting
+#   - action: submit_inpainting_form
+
+# - rule: When User Deny Inpainting
+#   steps:
+#   - intent: deny
+#   - action: utter_finish
+
+# # (추가) 다시 그리기 기능 
+# - rule: Re_drawing
+#   steps:
+#   - intent: re_drawing
+#   - action: action_reset_form
+#   - action: drawing_form
+#   - active_loop: drawing_form
+
+
+# (추가) 사용자의 응답 없을 때, Reminder
+- rule: Trigger `action_react_to_reminder` for `EXTERNAL_reminder`
+  steps:
+  - intent: EXTERNAL_reminder
+  - action: action_react_to_reminder
+
+
+# (추가) 예외 처리
+- rule: Exceptions
+  steps: 
+  - intent: exceptions
+  - action: utter_default
+
+- rule: Ask the user to rephrase whenever they send a message with low NLU confidence
+  steps:
+  - intent: nlu_fallback
+  - action: utter_please_rephrase
+
+
+###### https://rasa.com/docs/rasa/fallback-handoff/

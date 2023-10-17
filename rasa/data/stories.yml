@@ -1,0 +1,132 @@
+version: "3.1"
+
+stories:
+
+# (추가) greeting
+- story: Greeting
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+# (추가) Thanks
+- story: Thanks
+  steps:
+  - intent: thanks
+  - action: utter_thanks
+
+
+# # form 제거시 story
+# - story: Drawing
+#   steps:
+#   - intent: drawing
+#   - action: utter_ask_drawing_object
+#   - intent: inform
+#   - action: utter_ask_drawing_prompt
+#   - intent: inform
+#   - action: utter_submit_drawing # stable diffusion으로 넘겨주기 위해서는 actions 에서 처리해야함, action_submit_drawing 으로 바꿔야하나?
+#   - action: utter_continue
+
+
+# - story: Inpainting
+#   steps:
+#   - slot_was_set:
+#     - requested_slot: drawing_prompt??
+#   - intent: inpainting
+#   - action: utter_ask_inapinting_prompt
+#   - intent: inform
+#   - action: utter_submit_inpainting # stable diffusion으로 넘겨주기 위해서는 actions 에서 처리해야함, action_submit_inpainting 으로 바꿔야하나?
+
+
+# - story: Reset Drawing Object
+#   steps:
+#   - intent: re_drawing
+#   - action: action_reset_drawing_object
+#   - intent: utter_ask_drawing_object
+
+
+# - story: Deny Inpainting
+#   steps:
+#   - intent: deny
+#   - action: utter_finish
+
+
+
+
+#####
+# object
+- story: Choose Object
+  steps:
+  - intent: start
+  - action: object_form
+  - active_loop: object_form
+
+
+# drawing
+- story: Activate Drawing Form
+  steps:
+  - intent: drawing
+  - action: response_drawing_prompt_example
+  - action: drawing_form
+  - active_loop: drawing_form
+
+- story: Submit Drawing Form
+  steps:
+  - action: drawing_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_submit_drawing
+  - action: submit_drawing_form
+
+- story: Activate Submit Drawing Form
+  steps:
+  - intent: drawing
+  - action: response_drawing_prompt_example
+  - action: drawing_form
+  - active_loop: drawing_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_submit_drawing
+  - action: submit_drawing_form
+
+
+# inpainting
+- story: Before Activate Inpainting Form
+  steps:
+  - intent: inpainting
+  - action: response_inpainting_example
+  - action: action_set_reminder  # (추가) 알림 설정
+
+- story: Activate Inpainting Form
+  steps:
+  - intent: inpainting_done
+  - action: action_forget_reminders # (추가) 알림 취소
+  - action: response_inpainting_prompt_example
+  - action: inpainting_form
+  - active_loop: inpainting_form
+
+- story: Submit Inpainting Form
+  steps:
+  - action: inpainting_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_submit_inpainting
+  - action: submit_inpainting_form
+
+- story: When User Deny Inpainting
+  steps:
+  - intent: deny
+  - action: utter_finish
+  - action: action_finish
+
+
+# redrawing
+- story: Re_drawing
+  steps:
+  - intent: re_drawing
+  - action: action_reset_form
+  - action: object_form
+  - active_loop: object_form
+#####

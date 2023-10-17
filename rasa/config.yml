@@ -1,0 +1,156 @@
+# # The config recipe.
+# # https://rasa.com/docs/rasa/model-configuration/
+# recipe: default.v1
+
+# # Configuration for Rasa NLU.
+# # https://rasa.com/docs/rasa/nlu/components/
+# language: en
+
+# pipeline:
+# # # No configuration for the NLU pipeline was provided. The following default pipeline was used to train your model.
+# # # If you'd like to customize it, uncomment and adjust the pipeline.
+# # # See https://rasa.com/docs/rasa/tuning-your-model for more information.
+# #   - name: WhitespaceTokenizer
+# #   - name: RegexFeaturizer
+# #   - name: LexicalSyntacticFeaturizer
+# #   - name: CountVectorsFeaturizer
+# #   - name: CountVectorsFeaturizer
+# #     analyzer: char_wb
+# #     min_ngram: 1
+# #     max_ngram: 4
+# #   - name: DIETClassifier
+# #     epochs: 100
+# #     constrain_similarities: true
+# #   - name: EntitySynonymMapper
+# #   - name: ResponseSelector
+# #     epochs: 100
+# #     constrain_similarities: true
+# #   - name: FallbackClassifier
+# #     threshold: 0.3
+# #     ambiguity_threshold: 0.1
+
+# # Configuration for Rasa Core.
+# # https://rasa.com/docs/rasa/core/policies/
+# policies:
+# # # No configuration for policies was provided. The following default policies were used to train your model.
+# # # If you'd like to customize them, uncomment and adjust the policies.
+# # # See https://rasa.com/docs/rasa/policies for more information.
+# #   - name: MemoizationPolicy
+# #   - name: RulePolicy
+# #   - name: UnexpecTEDIntentPolicy
+# #     max_history: 5
+# #     epochs: 100
+# #   - name: TEDPolicy
+# #     max_history: 5
+# #     epochs: 100
+# #     constrain_similarities: true
+
+####################
+
+# recipe: default.v1
+# # The config recipe.
+# # https://rasa.com/docs/rasa/model-configuration/
+# # rasa train --fixed-model-name iwillfindyou_bot
+# language: ko
+
+# pipeline:
+#   - name: SpacyNLP
+#     model: "ko_core_news_sm"
+#   - name: "custom.mecab_tokenizer.mecabtok_3.MecabTokenizer"
+#     "intent_tokenization_flag": False
+#     # Symbol on which intent should be split
+#     "intent_split_symbol": "_"
+#     # Regular expression to detect tokens
+#     "token_pattern": None
+#   - name: "custom.gloVe_featurizer.gloVe_feature.GloveFeaturizer"
+#     alias: "gloVe"
+#   - name: RegexFeaturizer
+#   - name: LexicalSyntacticFeaturizer
+#   - name: CountVectorsFeaturizer
+#   - name: CountVectorsFeaturizer
+#     analyzer: char_wb
+#     min_ngram: 1
+#     max_ngram: 4
+#   - name: DIETClassifier
+#     epochs: 50
+#   - name: EntitySynonymMapper
+
+
+####################
+
+recipe: default.v1
+
+language: "ko"  # your two-letter language code
+
+# pipeline:
+#   - name: SpacyNLP
+#     model: ko_core_news_sm
+#   - name: SpacyTokenizer
+#   - name: SpacyFeaturizer
+#   - name: RegexFeaturizer
+#   - name: LexicalSyntacticFeaturizer
+#   - name: CountVectorsFeaturizer
+#   - name: CountVectorsFeaturizer
+#     analyzer: "char_wb"
+#     min_ngram: 1
+#     max_ngram: 4
+#   - name: DIETClassifier
+#     epochs: 100
+#   - name: EntitySynonymMapper
+#   - name: ResponseSelector
+#     epochs: 100
+#   - name: FallbackClassifier # https://rasa.com/docs/rasa/components#fallbackclassifier
+#     threshold: 0.8
+#     ambiguity_threshold: 0.1
+
+
+
+pipeline:
+  - name: SpacyNLP
+    model: ko_core_news_sm
+  - name: "SpacyTokenizer"
+    # Flag to check whether to split intents
+    "intent_tokenization_flag": False
+    # Symbol on which intent should be split
+    "intent_split_symbol": "_"
+    # Regular expression to detect tokens
+    "token_pattern": None
+  - name: "SpacyFeaturizer"
+    # Specify what pooling operation should be used to calculate the vector of
+    # the complete utterance. Available options: 'mean' and 'max'.
+    "pooling": "mean"
+  - name: RegexFeaturizer
+  - name: LexicalSyntacticFeaturizer
+  - name: CountVectorsFeaturizer
+  - name: CountVectorsFeaturizer
+    analyzer: "char_wb"
+    min_ngram: 1
+    max_ngram: 4
+  - name: DIETClassifier
+    epochs: 100
+  - name: EntitySynonymMapper
+  - name: ResponseSelector
+    epochs: 100
+  - name: FallbackClassifier # https://rasa.com/docs/rasa/components#fallbackclassifier
+    threshold: 0.8
+    ambiguity_threshold: 0.1
+
+
+
+policies:
+- name: MemoizationPolicy
+  max_history: 3
+- name: UnexpecTEDIntentPolicy
+  max_history: 8
+  epochs: 40 # 더 돌려보고 accuracy 높아지는지 확인해보기
+  use_gpu: True
+- name: TEDPolicy
+  max_history: 8
+  epochs: 40
+  constrain_similarities: true
+  use_gpu: True
+- name: RulePolicy
+  core_fallback_threshold: 0.3 # https://forum.rasa.com/t/getting-no-registered-action-found-for-name-action-default-fallback/44612
+  core_fallback_action_name: "action_default_fallback"
+  enable_fallback_prediction: True
+assistant_id: 20230415-132644-raw-mallet

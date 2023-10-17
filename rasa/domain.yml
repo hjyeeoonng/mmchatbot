@@ -1,0 +1,244 @@
+version: "3.1"
+
+# This is the form definition.
+# Note that we refer to slots defined below.
+forms:
+  object_form:
+    required_slots:
+      - drawing_object
+  drawing_form:
+    required_slots:
+      - drawing_prompt
+  inpainting_form:
+    required_slots:
+      - inpainting_prompt
+  
+# These are slot definitions.
+# Note that we also have entities with the same name.
+slots:
+  drawing_object:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: drawing_object
+
+  drawing_prompt:
+    type: list
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: drawing_prompt
+
+  inpainting_prompt:
+    type: list
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: inpainting_prompt
+
+# These are simple entity definitions
+entities:
+  - drawing_object
+  - drawing_prompt
+  - inpainting_prompt
+
+actions:
+  - utter_greet
+  - utter_thanks
+  # - utter_draw
+  # - utter_inpaint
+  - utter_ask_drawing_object
+  # - utter_ask_drawing_prompt
+  # - utter_ask_inpainting_prompt
+  # - utter_submit_drawing
+  - utter_submit_inpainting
+  - response_drawing_prompt_example
+  - response_inpainting_example
+  - response_inpainting_prompt_example
+  - validate_object_form
+  - validate_drawing_form
+  - validate_inpainting_form
+  - submit_drawing_form
+  - submit_inpainting_form
+  - utter_finish
+
+  # - action_check_completion
+  # - action_fallback
+  # - action_check_user_response
+  # - action_repeat_question
+  - action_finish
+  - action_set_reminder # (추가) 알림 설정 기능
+  # - action_ask_again
+  - action_react_to_reminder # (추가) 사용자의 응답 없을 때
+  - action_forget_reminders # (추가) 알림 취소 기능 (일정 시간 내에 사용자가 응답을 했을 때)
+  - action_reset_form # (추가) 다시 그리기
+
+intents:
+  - greet
+  - start
+  - drawing
+  - drawing_done
+  - inpainting
+  - inpainting_done
+  # - drawing_object
+  # - drawing_prompt
+  - inform
+  - thanks
+  - deny
+
+  - re_drawing
+  - exceptions
+  - ask_remind_call
+  - EXTERNAL_reminder
+  - ask_forget_reminders 
+
+responses:
+  utter_greet:
+  - text: 안녕하세요.
+  - text: 반가워요.
+
+  # drawing
+  utter_ask_drawing_object:
+  - text: 고양이/눈사람 중 어느 것을 그리고 싶으세요?
+  # - text: 자화상/집/새/고양이/산과 나무/꽃/과일 중 어느 것을 그리고 싶으세요?
+
+  # utter_ask_drawing_prompt:
+  # - text: 그리신 그림의 특징은 무엇인가요? 검은 털, 노란 눈과 같이 설명해주세요!
+
+  # utter_draw:
+  # - text: '{drawing_object}를 그림판에 그려주세요!'
+  #  - text: 그림판에 그려주세요!
+
+  # inpainting
+  # utter_inpaint:
+  # - text: 추가하고 싶은 부분을 꼼꼼하게 칠하고 'save' 버튼을 누른 후 알려주세요.
+
+  # utter_ask_inpainting_prompt:
+  # - text: 저는 목걸이나 모자를 씌우게 할 수 있어요! 칠한 부분에 어떻게 추가하고 싶으세요? 모자를 쓴 고양이 처럼 설명해주세요!
+  # # - text: 칠한 부분에 어떻게 추가하고 싶으세요?
+
+  utter_submit_drawing:
+  # - text: 그리신 {drawing_object} 그림에 말씀해주신 특징 {drawing_prompt_kr}을 넣어 완성해볼게요. 잠시만 기다려주세요~
+  - text: 그리신 {drawing_object} 그림에 말씀해주신 특징을 넣어 완성해볼게요. 잠시만 기다려주세요~
+
+  utter_submit_inpainting:
+  # - text: 말씀해주신대로 {inpainting_prompt}를 추가해 {drawing_object} 그림을 완성해볼게요. 잠시만 기다려주세요~
+  - text: 말씀해주신대로 추가해 {drawing_object} 그림을 완성해볼게요. 잠시만 기다려주세요~
+
+  utter_finish:
+  - text: 네, 여기서 끝낼게요. 추가하는 것도 재미있으니 다음번엔 한 번 해보세요!
+
+  utter_thanks:
+  - text: 별말씀을요.
+  - text: 그림 그리고 싶을 때 언제든 말씀해주세요:)
+
+  # (추가)
+  utter_default:
+  - text: 죄송합니다. 이해하지 못했습니다. 질문에 응답해주세요!
+  - text: 죄송해요. 이해를 못했어요. 다시 말씀해주실래요?
+  - text: 질문에 응답해주세요!
+
+  # utter_question:
+  # - text: 다 칠하셨나요?
+
+  utter_please_rephrase:
+  - text: 죄송해요. 이해를 못했어요. 다시 말씀해주실래요?
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
+
+#####
+# version: '3.1'
+# forms:
+#   drawing_form:
+#     required_slots:
+#     - drawing_object
+#     - drawing_prompt
+#   inpainting_form:
+#     required_slots:
+#     - inpainting_prompt
+# slots:
+#   drawing_object:
+#     type: text
+#     influence_conversation: true
+#     mappings:
+#     - type: from_entity
+#       entity: drawing_object
+#   drawing_prompt:
+#     type: list
+#     influence_conversation: true
+#     mappings:
+#     - type: from_entity
+#       entity: drawing_prompt
+#   inpainting_prompt:
+#     type: list
+#     influence_conversation: true
+#     mappings:
+#     - type: from_entity
+#       entity: inpainting_prompt
+# entities:
+# - inpainting_prompt
+# - drawing_prompt
+# - drawing_object
+# actions:
+# - submit_drawing_form
+# - utter_thanks
+# - response_inpainting_example
+# - action_set_reminder
+# - response_inpainting_prompt_example
+# - utter_submit_inpainting
+# - utter_submit_drawing
+# - action_forget_reminders
+# - submit_inpainting_form
+# - utter_greet
+# - utter_ask_drawing_object
+# - validate_drawing_form
+# - validate_inpainting_form
+# - utter_finish
+# - action_check_completion
+# - action_check_user_response
+# - action_repeat_question
+# - action_ask_again
+# - action_react_to_reminder
+# - action_reset_form
+# intents:
+# - EXTERNAL_reminder
+# - ask_forget_reminders
+# - ask_remind_call
+# - deny
+# - drawing
+# - drawing_done
+# - exceptions
+# - greet
+# - inform
+# - inpainting
+# - inpainting_done
+# - re_drawing
+# - thanks
+# responses:
+#   utter_greet:
+#   - text: 안녕하세요.
+#   - text: 반가워요.
+#   utter_ask_drawing_object:
+#   - text: 고양이/눈사람 중 어느 것을 그리고 싶으세요?
+#   utter_submit_drawing:
+#   - text: 그리신 {drawing_object} 그림에 말씀해주신 특징을 넣어 완성해볼게요. 잠시만 기다려주세요~
+#   utter_submit_inpainting:
+#   - text: 말씀해주신대로 추가해 {drawing_object} 그림을 완성해볼게요. 잠시만 기다려주세요~
+#   utter_finish:
+#   - text: 네, 여기서 끝낼게요. 추가하는 것도 재미있으니 다음번엔 한 번 해보세요!
+#   utter_thanks:
+#   - text: 별말씀을요.
+#   - text: 그림 그리고 싶을 때 언제든 말씀해주세요:)
+#   utter_default:
+#   - text: 죄송합니다. 이해하지 못했습니다. 질문에 응답해주세요!
+#   - text: 죄송해요. 이해를 못했어요. 다시 말씀해주실래요?
+#   - text: 질문에 응답해주세요!
+#   utter_please_rephrase:
+#   - text: 죄송해요. 이해를 못했어요. 다시 말씀해주실래요?
+# session_config:
+#   session_expiration_time: 60
+#   carry_over_slots_to_new_session: true
