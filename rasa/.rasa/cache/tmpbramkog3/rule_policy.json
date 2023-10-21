@@ -1,0 +1,34 @@
+{
+  "lookup": {
+    "rules": {
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"exceptions\"}}]": "utter_default",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"exceptions\"}}, {\"prev_action\": {\"action_name\": \"utter_default\"}, \"user\": {\"intent\": \"exceptions\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"EXTERNAL_reminder\"}}]": "action_react_to_reminder",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"EXTERNAL_reminder\"}}, {\"prev_action\": {\"action_name\": \"action_react_to_reminder\"}, \"user\": {\"intent\": \"EXTERNAL_reminder\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"nlu_fallback\"}}]": "utter_please_rephrase",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"nlu_fallback\"}}, {\"prev_action\": {\"action_name\": \"utter_please_rephrase\"}, \"user\": {\"intent\": \"nlu_fallback\"}}]": "action_listen"
+    },
+    "rule_only_slots": [],
+    "rule_only_loops": [],
+    "rules_for_loop_unhappy_path": {
+      "[{\"prev_action\": {\"action_name\": \"response_inpainting_prompt_example\"}}, {\"active_loop\": {\"name\": \"inpainting_form\"}, \"prev_action\": {\"action_name\": \"inpainting_form\"}, \"user\": {\"intent\": \"inpainting_done\"}}]": "do_not_predict_loop_action",
+      "[{\"prev_action\": {\"action_name\": \"response_drawing_prompt_example\"}}, {\"active_loop\": {\"name\": \"drawing_form\"}, \"prev_action\": {\"action_name\": \"drawing_form\"}, \"user\": {\"intent\": \"drawing\"}}]": "do_not_predict_loop_action",
+      "[{\"prev_action\": {\"action_name\": \"action_reset_form\"}}, {\"active_loop\": {\"name\": \"object_form\"}, \"prev_action\": {\"action_name\": \"object_form\"}, \"user\": {\"intent\": \"re_drawing\"}}]": "do_not_predict_loop_action",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}}, {\"active_loop\": {\"name\": \"object_form\"}, \"prev_action\": {\"action_name\": \"object_form\"}, \"user\": {\"intent\": \"start\"}}]": "do_not_predict_loop_action"
+    },
+    "rules_not_in_stories": [
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"EXTERNAL_reminder\"}}, {\"prev_action\": {\"action_name\": \"action_react_to_reminder\"}, \"user\": {\"intent\": \"EXTERNAL_reminder\"}}]",
+      "predicting default action with intent back",
+      "handling active loops and forms - inpainting_form",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"nlu_fallback\"}}, {\"prev_action\": {\"action_name\": \"utter_please_rephrase\"}, \"user\": {\"intent\": \"nlu_fallback\"}}]",
+      "predicting default action with intent session_start",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"exceptions\"}}]",
+      "predicting default action with intent restart",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"exceptions\"}}, {\"prev_action\": {\"action_name\": \"utter_default\"}, \"user\": {\"intent\": \"exceptions\"}}]",
+      "handling active loops and forms - object_form",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"EXTERNAL_reminder\"}}]",
+      "handling active loops and forms - drawing_form",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"nlu_fallback\"}}]"
+    ]
+  }
+}
