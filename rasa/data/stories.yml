@@ -60,6 +60,14 @@ stories:
   - action: object_form
   - active_loop: object_form
 
+# object - re_drawing
+- story: Choose Object (Re-drawing)
+  steps:
+  - intent: re_drawing
+  - action: action_reset_form
+  - action: object_form
+  - active_loop: object_form
+
 
 # drawing
 - story: Activate Drawing Form
@@ -121,12 +129,4 @@ stories:
   - action: utter_finish
   - action: action_finish
 
-
-# redrawing
-- story: Re_drawing
-  steps:
-  - intent: re_drawing
-  - action: action_reset_form
-  - action: object_form
-  - active_loop: object_form
 #####
