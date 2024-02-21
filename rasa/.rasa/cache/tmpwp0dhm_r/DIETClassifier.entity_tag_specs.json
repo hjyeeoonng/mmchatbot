@@ -1,0 +1,36 @@
+[
+  {
+    "tag_name": "entity",
+    "ids_to_tags": {
+      "1": "B-drawing_object",
+      "2": "I-drawing_object",
+      "3": "L-drawing_object",
+      "4": "U-drawing_object",
+      "5": "B-drawing_prompt",
+      "6": "I-drawing_prompt",
+      "7": "L-drawing_prompt",
+      "8": "U-drawing_prompt",
+      "9": "B-inpainting_prompt",
+      "10": "I-inpainting_prompt",
+      "11": "L-inpainting_prompt",
+      "12": "U-inpainting_prompt",
+      "0": "O"
+    },
+    "tags_to_ids": {
+      "B-drawing_object": 1,
+      "I-drawing_object": 2,
+      "L-drawing_object": 3,
+      "U-drawing_object": 4,
+      "B-drawing_prompt": 5,
+      "I-drawing_prompt": 6,
+      "L-drawing_prompt": 7,
+      "U-drawing_prompt": 8,
+      "B-inpainting_prompt": 9,
+      "I-inpainting_prompt": 10,
+      "L-inpainting_prompt": 11,
+      "U-inpainting_prompt": 12,
+      "O": 0
+    },
+    "num_tags": 13
+  }
+]
