@@ -165,3 +165,4 @@ cython_debug/
 #files - add hjyeeoonng
 file_receive.jpg
 rasa/models/20240227-145852-brownian-flux.tar.gz
+apitest.py
