@@ -20,6 +20,8 @@ from diffuser.inpaint import Inpaint
 # import sys
 import json
 import urllib.request
+#for translate
+import deepl
 
 
 # Naver Papago API
@@ -65,7 +67,8 @@ ALLOWED_DRAWING_PROMPTS_BIRD = [
 
 ALLOWED_DRAWING_PROMPTS_CAT = [
     "검은 털", "흰 털", 
-    "파란 눈", "노란 눈", 
+    "파란 눈", "노란 눈",
+    "","",
     # "검은털 고양이", "흰털 고양이", "파란눈 고양이", "노란눈 고양이",
     # "진주 목걸이", "다이아몬드 목걸이",
 ]
@@ -120,6 +123,21 @@ ALLOWED_INPAINTING_PROMPTS_SNOWMAN = [
     "목도리를 한 눈사람", "모자를 쓴 눈사람",
 ]
 
+#traslate_words for testing
+translate_words = {
+    "검은 털":"black fur",
+    "까망 털":"black fur",
+    "흰 털":"white fur",
+    "하얀 털":"white fur",
+    "파란 눈":"blue eyes",
+    "노란 눈":"yellow eyes",
+    "눈사람":"snowman",
+    "모자":"hat",
+    "모자를 쓴":"hatted",
+    "모자를 쓴 고양이":"a cat in a hat",
+    "커다란":"big",
+}
+print(translate_words['파란 눈'])
 
 # Validate 'drawing_object' slot value
 class ValidateObjectForm(FormValidationAction):
@@ -188,7 +206,7 @@ class ValidateDrawingForm(FormValidationAction):
         translated_drawing_prompt = []
 
         for word in slot_value:
-            translated_drawing_prompt.append(translate(word.rstrip(',').strip(' ')))
+            translated_drawing_prompt.append(translate_deepl(word.rstrip(',').strip(' ')))
             
         '''
         # slot 이 list 가 아닌 경우
@@ -241,7 +259,7 @@ class ValidateInpaintingForm(FormValidationAction):
         translated_inpainting_prompt = []
 
         for word in slot_value:
-            translated_inpainting_prompt.append(translate(word.rstrip(',').strip(' ')))
+            translated_inpainting_prompt.append(translate_deepl(word.rstrip(',').strip(' ')))
 
 
         '''
@@ -469,6 +487,12 @@ def translate(prompt):
 
     return result.lower()
 
+# Translate Prompt with Deepl API
+def translate_deepl(prompt):
+    auth_key = "3dd949ff-ce59-4359-be36-a85c086c887b:fx"
+    translator = deepl.Translator(auth_key)
+    result = translator.translate_text(prompt, target_lang="EN-US")
+    return result.text.lower()
 
 # (추가) 사용자의 응답 없을 때
 class ActionSetReminder(Action):
