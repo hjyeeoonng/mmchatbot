@@ -300,7 +300,7 @@ class SubmitDrawingForm(Action):
         # slot 이 list 가 아닌 경우
         # current_drawing_prompt_value = "a black and white drawing of" + current_drawing_prompt_value + "on whiteboard"
 
-        current_drawing_prompt_value.insert(0, "a black and white drawing of a " + translate(current_drawing_object_value))
+        current_drawing_prompt_value.insert(0, "a black and white drawing of a " + translate_deepl(current_drawing_object_value))
         current_drawing_prompt_value.append("on whiteboard")
         diffusion = Draw(current_drawing_object_value, current_drawing_prompt_value)
         diffusion.draw_image()

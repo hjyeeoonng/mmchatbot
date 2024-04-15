@@ -5,6 +5,8 @@ import torch
 import requests
 from PIL import Image
 from io import BytesIO
+import os
+
 #from rembg import remove
 class Draw:
     def __init__(self, drawing_object, drawing_prompt):
@@ -12,11 +14,9 @@ class Draw:
         self.drawing_prompt = drawing_prompt
         
     def draw_image(self):
-        
         drawing_object_values = "".join(self.drawing_object)
         drawing_prompt_values = ", ".join(self.drawing_prompt)
-
-        image = Image.open('/home/public/zio/mmchatbot/file_receive.jpg') # Change to your path
+        image = Image.open(os.getcwd()[:-4]+'file_receive.jpg') # Change to your path
         model_path = "runwayml/stable-diffusion-v1-5"
         # 사진 윤곽선 따기
         hed = HEDdetector.from_pretrained("lllyasviel/Annotators")
@@ -42,7 +42,7 @@ class Draw:
         image = image.resize((700,700))
         # 배경 제거하기
         #out = remove(image)
-        image.save('/home/public/zio/mmchatbot/static/js/change.png')  # Change to your path
+        image.save(os.getcwd()[:-4]+'static/js/change.png')  # Change to your path
         print("---------- draw.py drawing_object ----------")
         print(drawing_object_values)
         print("---------- draw.py drawing_prompt ----------")

@@ -9,6 +9,7 @@ from torchvision import transforms
 from io import BytesIO
 from matplotlib import pyplot as plt
 from diffusers import StableDiffusionInpaintPipeline
+import os
 
 class Inpaint:
     def __init__(self, inpainting_prompt):
@@ -19,7 +20,7 @@ class Inpaint:
         print(inpainting_prompt_values)
 
         # jpg로 수정
-        img2 = Image.open("/home/public/zio/mmchatbot/file_receive.jpg")    # Change to your path
+        img2 = Image.open(os.getcwd()[:-4]+"file_receive.jpg")    # Change to your path
         width, height = img2.size
         # 새로운 이미지 생성
         new_image = Image.new("RGB", (width, height), color=(0, 0, 0))  # 검정색 배경
@@ -37,10 +38,10 @@ class Inpaint:
                 if distance < tolerance:
                     new_image.putpixel((x, y), white)
         # 마스크 분리해서 저장
-        new_image.save('/home/public/zio/mmchatbot/rasa/mask.png')  # Change to your path
+        new_image.save(os.getcwd()[:-4]+'rasa/mask.png')  # Change to your path
 
         # 솔리드화
-        mask_image = (Image.open("/home/public/zio/mmchatbot/rasa/mask.png").convert("L")).resize((512, 512))   # Change to your path
+        mask_image = (Image.open(os.getcwd()[:-4]+"rasa/mask.png").convert("L")).resize((512, 512))   # Change to your path
         binary_mask = np.array(mask_image)
         threshold_value = 127  
         binary_mask[binary_mask <= threshold_value] = 0
@@ -54,14 +55,14 @@ class Inpaint:
         cv2.fillPoly(output_image, [approx_points], (255, 0, 0))
         output_image[(output_image == [255, 255, 255]).all(axis=2)] = [0, 0, 0]  
         output_image[(output_image == [255, 0, 0]).all(axis=2)] = [255, 255, 255]  
-        cv2.imwrite("/home/public/zio/mmchatbot/rasa/mask.png", output_image) # solidify된 흑백 마스킹 이미지 저장  # Change to your path
+        cv2.imwrite(os.getcwd()[:-4]+"rasa/mask.png", output_image) # solidify된 흑백 마스킹 이미지 저장  # Change to your path
         
 
-        init_image = Image.open('/home/public/zio/mmchatbot/static/js/change.png')
+        init_image = Image.open(os.getcwd()[:-4]+'static/js/change.png')
         init_image =  init_image.convert("RGB").resize((512, 512))
         # image = image.resize((512, 512))
 
-        mask = Image.open('/home/public/zio/mmchatbot/rasa/mask.png')
+        mask = Image.open(os.getcwd()[:-4]+'rasa/mask.png')
         mask = mask.convert("RGB").resize((512, 512))
         # mask.save('cat_mask.PNG')
 
@@ -73,7 +74,7 @@ class Inpaint:
         # prompt=
         image = pipe(inpainting_prompt_values, image=init_image, mask_image=mask).images[0]
         image = image.resize((700,700))
-        image.save('/home/public/zio/mmchatbot/static/js/change.png')
+        image.save(os.getcwd()[:-4]+'static/js/change.png')
 
 
 

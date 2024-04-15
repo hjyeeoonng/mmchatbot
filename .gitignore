@@ -166,3 +166,5 @@ cython_debug/
 file_receive.jpg
 rasa/models/20240227-145852-brownian-flux.tar.gz
 apitest.py
+*.jpg
+*.png
